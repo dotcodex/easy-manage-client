@@ -14,25 +14,48 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import routes from '@routes/routes';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { makeStyles } from '@material-ui/styles';
 
 const drawerWidth = 240;
 
+const useStyles = makeStyles((theme) => ({
+  active: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    border: 0,
+    borderRadius: 3,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    color: 'white',
+    height: 48,
+    padding: '0 30px',
+    '& svg, span': {
+      color: 'white',
+      fontWeight: 'bold',
+    },
+  },
+}));
+
 function ResponsiveDrawer(props) {
   const { children } = props;
+  const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
         {routes.map((route, i) => (
-          <ListItem component={Link} to={route.path} key={i} button>
+          <ListItem
+            component={NavLink}
+            to={route.path}
+            activeClassName={classes.active}
+            key={i}
+            button
+          >
             <ListItemIcon>{route.icon}</ListItemIcon>
             <ListItemText primary={route.title} />
           </ListItem>
@@ -45,6 +68,7 @@ function ResponsiveDrawer(props) {
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
+        color='primary'
         position='fixed'
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
