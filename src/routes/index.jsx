@@ -1,17 +1,20 @@
 import React from 'react';
-import DefaultLayout from '../layout/DefaultLayout';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import Products from '../pages/Products';
+import DefaultLayout from '@layout/DefaultLayout';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
+import routes from '@routes/routes';
 
 function Routes() {
   return (
-    <DefaultLayout>
-      <BrowserRouter>
+    <BrowserRouter>
+      <DefaultLayout>
         <Switch>
-          <Route path='/' component={Products} />
+          <Route exact path='/' render={() => <Redirect to='/products' />} />
+          {routes.map((route, i) => (
+            <Route key={i} {...route} />
+          ))}
         </Switch>
-      </BrowserRouter>
-    </DefaultLayout>
+      </DefaultLayout>
+    </BrowserRouter>
   );
 }
 

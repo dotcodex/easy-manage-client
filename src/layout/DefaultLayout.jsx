@@ -6,20 +6,20 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import routes from '@routes/routes';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
-  const { window, children } = props;
+  const { children } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -31,12 +31,10 @@ function ResponsiveDrawer(props) {
       <Toolbar />
       <Divider />
       <List>
-        {['Productos', 'Ventas', 'Compras'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+        {routes.map((route, i) => (
+          <ListItem component={Link} to={route.path} key={i} button>
+            <ListItemIcon>{route.icon}</ListItemIcon>
+            <ListItemText primary={route.title} />
           </ListItem>
         ))}
       </List>
@@ -113,7 +111,7 @@ function ResponsiveDrawer(props) {
 }
 
 ResponsiveDrawer.propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.node,
 };
 
 export default ResponsiveDrawer;
